@@ -7,7 +7,7 @@ export default NextAuth({
   session: {
     jwt: true,
   },
-
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     session: async ({ session, token }) => {
       session.id = token.id;
