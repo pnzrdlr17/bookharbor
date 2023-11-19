@@ -81,6 +81,10 @@ function AllLocalBooks(props) {
   };
 
   const submitHandler = async () => {
+    const coverUrl = await getImageUrl(enteredCover);
+
+    console.log(coverUrl);
+    
     if (status === 'unauthenticated') {
       router.replace('/auth');
       return;
@@ -92,9 +96,7 @@ function AllLocalBooks(props) {
     const enteredIsbn = isbnInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
 
-    const coverUrl = await getImageUrl(enteredCover);
-
-    console.log(coverUrl);
+    
 
     try {
       const result = await createBook(
