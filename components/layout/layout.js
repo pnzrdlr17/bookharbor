@@ -329,7 +329,7 @@ function Layout(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              href={status === 'unauthenticated' ? '/auth' : '/profile'}
+              href='/profile'
             >
               <ListItemIcon
                 sx={{
@@ -354,7 +354,7 @@ function Layout(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              href={status === 'unauthenticated' ? '/auth' : '/notifications'}
+              href='/notifications'
             >
               <ListItemIcon
                 sx={{
@@ -380,7 +380,7 @@ function Layout(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              href={status === 'unauthenticated' ? '/auth' : '/favorites'}
+              href='/favorites'
             >
               <ListItemIcon
                 sx={{
@@ -404,7 +404,7 @@ function Layout(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              href={status === 'unauthenticated' ? '/auth' : '/requests'}
+              href='/requests'
             >
               <ListItemIcon
                 sx={{
