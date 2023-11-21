@@ -1,4 +1,4 @@
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { getAllBooksFromDB } from '@/lib/book';
 import Loading from '@/components/loading';
 import { useState, useEffect } from 'react';
@@ -72,6 +72,10 @@ function FavoritesPage(props) {
 
   if (loading) {
     return <Loading />;
+  }
+  
+  if (status === 'unauthenticated') {
+    router.replace('/auth');
   }
 
   return (
@@ -186,21 +190,11 @@ function FavoritesPage(props) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req });
+export async function getStaticProps(context) {
   const booksList = await getAllBooksFromDB();
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/auth',
-        permanent: false,
-      },
-    };
-  }
 
   return {
     props: {
-      session,
       booksList: booksList.map((book) => ({
         title: book.title,
         author: book.author,
