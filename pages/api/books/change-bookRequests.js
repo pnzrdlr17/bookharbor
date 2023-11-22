@@ -1,16 +1,21 @@
 import { connectToDatabase } from '../../../lib/db';
 import { ObjectId } from 'mongodb';
+import { getServerSession } from 'next-auth';
 
 async function handler(req, res) {
   if (req.method !== 'PATCH') {
     return res.status(405).end(); // Method Not Allowed
   }
 
-  const { session, bookId, newStatus } = req.body;
+  const session = await getServerSession(req, res);
+
   if (!session) {
-    console.log('Unauthenticated Request!');
+    res.status(401).json({ message: 'Unauthenticated Request!' });
     return;
   }
+
+  const { bookId, newStatus } = req.body;
+
   const client = await connectToDatabase();
   const usersCollection = client.db().collection('users');
   const booksCollection = client.db().collection('books');
@@ -24,8 +29,8 @@ async function handler(req, res) {
     if (user.email === book.owner) {
       client.close();
 
-      return res.status(401).json({
-        message: 'Unauthenticated Request!',
+      return res.status(406).json({
+        message: 'Invalid Request!',
         bookRequests: user.bookRequests,
       });
     }
@@ -94,8 +99,8 @@ async function handler(req, res) {
     if (user.email === book.owner) {
       client.close();
 
-      return res.status(401).json({
-        message: 'Unauthenticated Request!',
+      return res.status(406).json({
+        message: 'Invalid Request!',
         bookRequests: user.bookRequests,
       });
     }
