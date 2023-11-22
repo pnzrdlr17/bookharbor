@@ -136,7 +136,7 @@ function Layout(props) {
       //as usesession will itself trigger the updates
       handleMenuClose();
       enqueueSnackbar('Logged Out', { variant: 'warning' });
-      // await router.replace('/');
+      await router.push('/');
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -191,18 +191,6 @@ function Layout(props) {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {/* {session && (
-              <IconButton size="large" color="inherit">
-                <Badge badgeContent={4} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            )} */}
-            {/* {session && (
-              <IconButton size="large" color="inherit">
-                <FavoriteIcon />
-              </IconButton>
-            )} */}
             {session && (
               <IconButton
                 size="large"
@@ -310,7 +298,15 @@ function Layout(props) {
         </MenuItem>
         <MenuItem onClick={logoutHandler}>Logout</MenuItem>
       </Menu>
-      <Drawer variant="permanent" open={open}>
+      <Drawer 
+        variant="permanent" 
+        open={open} 
+        sx={{
+          ...(!open && {
+            display: { xs: 'none', md: 'block' },
+          }),
+        }}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? (
