@@ -98,7 +98,7 @@ const RequestsList = (props) => {
           <Grid item xs={2} sm={1}>
             <Avatar
               alt={request.name}
-              src={`http://gravatar.com/avatar/${request.userEmail}?d=identicon`}
+              src={`https://gravatar.com/avatar/${request.userEmail}?d=identicon`}
             />
           </Grid>
 
