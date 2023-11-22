@@ -7,9 +7,9 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <SnackbarProviderWrapper>
-      <LoadingProvider>
-        <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
+      <SnackbarProviderWrapper>
+        <LoadingProvider>
           <Layout>
             <Head>
               <title>BookHarbor</title>
@@ -17,9 +17,9 @@ function MyApp({ Component, pageProps }) {
             </Head>
             <Component {...pageProps} />
           </Layout>
-        </SessionProvider>
-      </LoadingProvider>
-    </SnackbarProviderWrapper>
+        </LoadingProvider>
+      </SnackbarProviderWrapper>
+    </SessionProvider>
   );
 }
 
