@@ -11,21 +11,18 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSession } from 'next-auth/react';
 import RequestsList from './requestsList';
-import { useLoading } from '@/store/loading-context';
 import { useSnackbar } from 'notistack';
 
 const BookDetail = (props) => {
   const { data: session, status } = useSession();
-  const { loading, setLoading } = useLoading();
   const book = props.book;
   const { enqueueSnackbar } = useSnackbar();
 
   const favClickHandler = async () => {
-    // setLoading(true);
     try {
       const response = await fetch('/api/books/toggle-starr', {
         method: 'PATCH',
-        body: JSON.stringify({ bookId: book._id, session: session }),
+        body: JSON.stringify({ bookId: book._id }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -41,19 +38,15 @@ const BookDetail = (props) => {
       console.log(data.message);
     } catch (error) {
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
-    }
+    } 
   };
 
   const requestClickHandler = async () => {
     try {
-      // setLoading(true);
       const response = await fetch('/api/books/change-bookRequests', {
         method: 'PATCH',
         body: JSON.stringify({
           bookId: book._id,
-          session: session,
           newStatus: 'pending',
         }),
         headers: {
@@ -65,24 +58,19 @@ const BookDetail = (props) => {
         variant: 'success',
       });
       props.setBookRequestArr(data.bookRequests);
-
       console.log(data.message);
     } catch (error) {
       enqueueSnackbar(`Request send failed!`, { variant: 'error' });
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
-    }
+    } 
   };
 
   const cancelClickHandler = async () => {
     try {
-      // setLoading(true);
       const response = await fetch('/api/books/change-bookRequests', {
         method: 'PATCH',
         body: JSON.stringify({
           bookId: book._id,
-          session: session,
           newStatus: 'unrequested',
         }),
         headers: {
@@ -92,14 +80,11 @@ const BookDetail = (props) => {
       const data = await response.json();
       enqueueSnackbar(`Request Cancelled`, { variant: 'warning' });
       props.setBookRequestArr(data.bookRequests);
-
       console.log(data.message);
     } catch (error) {
       enqueueSnackbar(`Failed to Cancel Request`, { variant: 'error' });
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
-    }
+    } 
   };
 
   const bookStatus = (bookId) => {
@@ -111,7 +96,7 @@ const BookDetail = (props) => {
     }
     return 'unrequested';
   };
-  console.log(props.bookRequestArr, bookStatus(book._id));
+
   return (
     <Container
       sx={{
