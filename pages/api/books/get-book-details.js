@@ -1,15 +1,18 @@
 import { connectToDatabase } from '../../../lib/db';
+import { getServerSession } from 'next-auth';
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).end(); // Method Not Allowed
   }
 
-  const { session } = req.body;
+  const session = await getServerSession(req, res);
+
   if (!session) {
-    console.log('Unauthenticated Request!');
+    res.status(401).json({ message: 'Unauthenticated Request!' });
     return;
   }
+
   const client = await connectToDatabase();
   const usersCollection = client.db().collection('users');
 
