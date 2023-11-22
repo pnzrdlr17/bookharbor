@@ -136,7 +136,7 @@ function Layout(props) {
       //as usesession will itself trigger the updates
       handleMenuClose();
       enqueueSnackbar('Logged Out', { variant: 'warning' });
-      await router.replace('/');
+      // await router.replace('/');
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -214,7 +214,7 @@ function Layout(props) {
                 color="inherit"
               >
                 <Avatar
-                  src={`http://gravatar.com/avatar/${session.user.email}?d=identicon`}
+                  src={`https://gravatar.com/avatar/${session.user.email}?d=identicon`}
                 />
               </IconButton>
             )}
@@ -278,7 +278,7 @@ function Layout(props) {
               color="inherit"
             >
               <Avatar
-                src={`http://gravatar.com/avatar/${session.user.email}?d=identicon`}
+                src={`https://gravatar.com/avatar/${session.user.email}?d=identicon`}
               />
             </IconButton>
             <p>{`${session.user.firstName} ${session.user.lastName}`}</p>
