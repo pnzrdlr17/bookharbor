@@ -1,20 +1,24 @@
 import { getSession } from 'next-auth/react';
-import UserProfile from '../components/user/UserProfile';
 import Loading from '@/components/loading';
 import { useLoading } from '@/store/loading-context';
+import { Box, Typography } from '@mui/material';
 
-function ProfilePage(props) {
+function RequestsPage(props) {
   const { loading, setLoading } = useLoading();
 
   if (loading) {
     return <Loading />;
   }
 
-  return <div>Requests</div>;
+  return (
+    <Box textAlign="center">
+      <Typography variant="h1">Requests</Typography>
+    </Box>
+  );
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req });
+  const session = await getSession(context);
 
   if (!session) {
     return {
@@ -26,8 +30,10 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session },
+    props: {
+      session,
+    },
   };
 }
 
-export default ProfilePage;
+export default RequestsPage;
