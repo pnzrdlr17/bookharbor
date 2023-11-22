@@ -47,13 +47,7 @@ const BookDetailPage = (prop) => {
     const fetchDetails = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/books/get-book-details', {
-          method: 'POST',
-          body: JSON.stringify({ session: session }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch('/api/books/get-book-details', { method: 'GET' });
         const data = await response.json();
         setStarrArr(data.starr);
         setBookRequestArr(data.bookRequests);
@@ -75,7 +69,7 @@ const BookDetailPage = (prop) => {
       try {
         const response = await fetch('/api/books/get-book-requests', {
           method: 'POST',
-          body: JSON.stringify({ session: session, bookId: bookId }),
+          body: JSON.stringify({ bookId: bookId }),
           headers: {
             'Content-Type': 'application/json',
           },
