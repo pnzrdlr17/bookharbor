@@ -7,21 +7,17 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Link from 'next/link';
-import { useLoading } from '@/store/loading-context';
 import { useSnackbar } from 'notistack';
 
 const RequestsList = (props) => {
-  const { loading, setLoading } = useLoading();
   const { enqueueSnackbar } = useSnackbar();
 
   const acceptHandler = async (email) => {
     try {
-      // setLoading(true);
       const response = await fetch('/api/books/change-bookRequests', {
         method: 'PATCH',
         body: JSON.stringify({
           bookId: props.bookId,
-          session: props.session,
           requestedUserEmail: email,
           newStatus: 'accepted',
         }),
@@ -31,28 +27,22 @@ const RequestsList = (props) => {
       });
       const data = await response.json();
       enqueueSnackbar(`Request ACCEPTED`, { variant: 'success' });
-
       props.setUserRequestArr(data.userRequests);
-
       console.log(data.message);
     } catch (error) {
       enqueueSnackbar(`Request ACCEPT: Failed, try again!`, {
         variant: 'error',
       });
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
-    }
+    } 
   };
 
   const denyHandler = async (email) => {
     try {
-      // setLoading(true);
       const response = await fetch('/api/books/change-bookRequests', {
         method: 'PATCH',
         body: JSON.stringify({
           bookId: props.bookId,
-          session: props.session,
           requestedUserEmail: email,
           newStatus: 'denied',
         }),
@@ -66,9 +56,7 @@ const RequestsList = (props) => {
     } catch (error) {
       enqueueSnackbar(`Request DENY: Failed, try again!`, { variant: 'error' });
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
-    }
+    } 
   };
 
   return (
