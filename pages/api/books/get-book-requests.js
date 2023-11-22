@@ -1,17 +1,24 @@
 import { connectToDatabase } from '../../../lib/db';
 import { ObjectId } from 'mongodb';
+import { getServerSession } from 'next-auth';
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).end(); // Method Not Allowed
   }
-  let arr = [];
-  const { session, bookId } = req.body;
+
+  const session = await getServerSession(req, res);
+
   if (!session) {
-    return res
+    res
       .status(401)
       .json({ message: 'Unauthenticated Request!', requestArr: arr });
+    return;
   }
+  
+  let arr = [];
+  const { bookId } = req.body;
+
   const client = await connectToDatabase();
   const booksCollection = client.db().collection('books');
 
@@ -27,8 +34,8 @@ async function handler(req, res) {
   if (book.owner !== session.user.email) {
     client.close();
     return res
-      .status(401)
-      .json({ message: 'Unauthenticated Request!', requestArr: arr });
+      .status(402)
+      .json({ message: 'Unauthorized Request!', requestArr: arr });
   }
   client.close();
 
