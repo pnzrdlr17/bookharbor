@@ -2,7 +2,7 @@ import { connectToDatabase } from '../../../lib/db';
 import { getServerSession } from 'next-auth';
 
 async function handler(req, res) {
-  if (req.method !== 'POST') {
+  if (req.method !== 'GET') {
     return res.status(405).end(); // Method Not Allowed
   }
 
