@@ -23,13 +23,7 @@ function FavoritesPage(props) {
     const fetchDetails = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/books/get-book-details', {
-          method: 'POST',
-          body: JSON.stringify({ session: props.session }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch('/api/books/get-book-details', {method: 'GET'});
         const data = await response.json();
         setStarrArr(data.starr);
       } catch (error) {
@@ -48,7 +42,7 @@ function FavoritesPage(props) {
     try {
       const response = await fetch('/api/books/toggle-starr', {
         method: 'PATCH',
-        body: JSON.stringify({ bookId: bookId, session: props.session }),
+        body: JSON.stringify({ bookId: bookId }),
         headers: {
           'Content-Type': 'application/json',
         },
