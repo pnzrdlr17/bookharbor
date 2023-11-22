@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { getSession, useSession, getServerSession } from 'next-auth/react';
 import { getAllBooksFromDB } from '@/lib/book';
 import Loading from '@/components/loading';
 import { useState, useEffect } from 'react';
@@ -10,13 +10,12 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import { useLoading } from '@/store/loading-context';
 import { useSnackbar } from 'notistack';
 
 function FavoritesPage(props) {
   const { loading, setLoading } = useLoading();
-  const { data: session, status } = useSession();
   const [starrArr, setStarrArr] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -26,13 +25,12 @@ function FavoritesPage(props) {
       try {
         const response = await fetch('/api/books/get-book-details', {
           method: 'POST',
-          body: JSON.stringify({ session: session }),
+          body: JSON.stringify({ session: props.session }),
           headers: {
             'Content-Type': 'application/json',
           },
         });
         const data = await response.json();
-        console.log(data);
         setStarrArr(data.starr);
       } catch (error) {
         console.log('Error fetching book details', error);
@@ -41,17 +39,16 @@ function FavoritesPage(props) {
       }
     };
 
-    if (session) {
+    if (props.session) {
       fetchDetails();
     }
-  }, [status]);
+  }, [props.session]);
 
   const favClickHandler = async (bookId) => {
     try {
-      // setLoading(true);
       const response = await fetch('/api/books/toggle-starr', {
         method: 'PATCH',
-        body: JSON.stringify({ bookId: bookId, session: session }),
+        body: JSON.stringify({ bookId: bookId, session: props.session }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,17 +62,11 @@ function FavoritesPage(props) {
       setStarrArr(data.starr);
     } catch (error) {
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
     }
   };
 
   if (loading) {
     return <Loading />;
-  }
-  
-  if (status === 'unauthenticated') {
-    router.replace('/auth');
   }
 
   return (
@@ -190,11 +181,23 @@ function FavoritesPage(props) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth',
+        permanent: false,
+      },
+    };
+  }
+
   const booksList = await getAllBooksFromDB();
 
   return {
     props: {
+      session,
       booksList: booksList.map((book) => ({
         title: book.title,
         author: book.author,
