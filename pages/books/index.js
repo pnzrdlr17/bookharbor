@@ -38,15 +38,8 @@ function AllBooksPage(props) {
     const fetchDetails = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/books/get-book-details', {
-          method: 'POST',
-          body: JSON.stringify({ session: session }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch('/api/books/get-book-details', { method: 'GET' });
         const data = await response.json();
-        console.log(data);
         setStarrArr(data.starr);
       } catch (error) {
         console.log('Error fetching book details', error);
