@@ -1,19 +1,20 @@
 import { hashPassword, verifyPassword } from '../../../lib/auth';
 import { connectToDatabase } from '../../../lib/db';
-import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 
 async function handler(req, res) {
   if (req.method !== 'PATCH') {
     return;
   }
 
-  const data = req.body;
-  const { oldPassword, newPassword, session } = data;
-
+  const session = await getServerSession(req, res);
+  
   if (!session) {
     res.status(401).json({ message: 'Unauthenticated Request!' });
     return;
   }
+
+  const { oldPassword, newPassword } = req.body;
 
   const userEmail = session.user.email;
 
