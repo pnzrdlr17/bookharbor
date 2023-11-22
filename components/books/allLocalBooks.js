@@ -40,8 +40,7 @@ async function createBook(
   cover,
   isbn,
   description,
-  city,
-  owner
+  city
 ) {
   const formData = new FormData();
   formData.append('title', title);
@@ -50,7 +49,6 @@ async function createBook(
   formData.append('isbn', isbn);
   formData.append('description', description);
   formData.append('city', city);
-  formData.append('owner', owner);
 
   const response = await fetch('/api/books/add-book', {
     method: 'POST',
@@ -137,8 +135,7 @@ function AllLocalBooks(props) {
           enteredCover,
           enteredIsbn,
           enteredDescription,
-          session.user.city,
-          session.user.email
+          session.user.city
         );
 
         console.log(result);
@@ -147,7 +144,6 @@ function AllLocalBooks(props) {
         console.log(error);
         enqueueSnackbar(`Failed to add the book`, { variant: 'error' });
       }
-
       setOpen(false);
       router.reload();
     } catch (error) {
@@ -159,10 +155,9 @@ function AllLocalBooks(props) {
 
   const favClickHandler = async (bookId) => {
     try {
-      // setLoading(true);
       const response = await fetch('/api/books/toggle-starr', {
         method: 'PATCH',
-        body: JSON.stringify({ bookId: bookId, session: session }),
+        body: JSON.stringify({ bookId: bookId }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -176,9 +171,7 @@ function AllLocalBooks(props) {
       props.setStarrArr(data.starr);
     } catch (error) {
       console.error('Error fetching data:', error);
-    } finally {
-      // setLoading(false);
-    }
+    } 
   };
 
   const modal = (
