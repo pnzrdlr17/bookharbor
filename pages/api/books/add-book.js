@@ -3,8 +3,8 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { Formidable } from 'formidable';
 import fs from 'fs';
+import { getServerSession } from 'next-auth';
 
-//set bodyparser
 export const config = {
   api: {
     bodyParser: false,
@@ -27,9 +27,6 @@ async function getImageUrl(file) {
         'Content-Type': 'multipart/form-data',
       },
     });
-
-    // Check the response data for the uploaded image details
-
     return response.data.image.url;
   } catch (error) {
     console.error('Error uploading image:', error);
@@ -42,6 +39,15 @@ async function handler(req, res) {
     return;
   }
 
+  const session = await getServerSession(req, res);
+
+  if (!session) {
+    res.status(401).json({ message: 'Unauthenticated Request!' });
+    return;
+  }
+
+  const owner = session.user.email;
+  
   const data = await new Promise((resolve, reject) => {
     const form = new Formidable();
 
@@ -51,14 +57,11 @@ async function handler(req, res) {
     });
   });
 
-  const { title, author, isbn, description, city, owner } = data.fields;
+  const { title, author, isbn, description, city } = data.fields;
 
   const coverFile = data.files.cover;
 
   const coverUrl = await getImageUrl(coverFile);
-  console.log(coverUrl, 'fjjf');
-
-  //check data...
 
   const client = await connectToDatabase();
   const booksCollection = client.db().collection('books');
@@ -70,7 +73,7 @@ async function handler(req, res) {
     isbn: isbn[0],
     description: description[0],
     city: city[0],
-    owner: owner[0],
+    owner: owner,
     userRequests: [],
   });
 
