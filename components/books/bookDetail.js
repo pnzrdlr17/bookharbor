@@ -18,7 +18,7 @@ const BookDetail = (props) => {
   const { data: session, status } = useSession();
   const book = props.book;
   const { enqueueSnackbar } = useSnackbar();
-  onst router = useRouter();
+  const router = useRouter();
 
   const favClickHandler = async () => {
     try {
