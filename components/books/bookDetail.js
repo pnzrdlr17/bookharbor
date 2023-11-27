@@ -12,11 +12,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useSession } from 'next-auth/react';
 import RequestsList from './requestsList';
 import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/router';
 
 const BookDetail = (props) => {
   const { data: session, status } = useSession();
   const book = props.book;
   const { enqueueSnackbar } = useSnackbar();
+  onst router = useRouter();
 
   const favClickHandler = async () => {
     try {
@@ -42,6 +44,10 @@ const BookDetail = (props) => {
   };
 
   const requestClickHandler = async () => {
+    if(!session){
+      router.push('/auth');
+      return;
+    }
     try {
       const response = await fetch('/api/books/change-bookRequests', {
         method: 'PATCH',
