@@ -1,40 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [BookHarbor](https://bookharbor.vercel.app/)
 
-## Getting Started
+A web application aimed at transforming the way we access and share educational resources within our local communities. <br/>
+Where the cost of textbooks and course materials could often become a barrier to education, and concerns for environmental sustainability are on the rise. The platform is here to bridge that gap the challenges faced by students, educators, and book enthusiasts in acquiring essential learning materials.<br/>
+At its core, BookHarbor is driven by a commitment to make educational resources more accessible, sustainable, and community-oriented. Beyond being a mere book exchange, it aspires to foster a sense of belonging and collaboration among readers, students, and educators.
 
-First, run the development server:
+### FEATURES:
+- Book Listings: Users can create book listings, specifying book details, condition, and availability for lending or sale.
+- Search and Discovery: Users can easily find specific books, authors, or genres.
+- User Profiles: Personalized profiles allow users to showcase their book collections and favorite books.
+- Responsive and Minimalistic: The web-application is fully – responsive and is minimalistic in theme and attributes.
+- User Authentication: User authentication along with sessions-tracking using NextAuth.
+  
+#### [Under Development]:
+- Community and Messaging: Built-in messaging facilitates communication between users, streamlining book exchanges.
+- Notifications: Users receive real-time notifications for new book listings, messages, and return due dates.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<p>
+  <br>
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/f5f12973-7790-42f2-897e-aaabb2bf2d26">
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/63ad3093-6272-4e6b-b428-195cd6494eac" align="right">
+  <hr>
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/1ac74c02-5766-4144-9a53-7aa30ceeb048">
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/b3f56b88-70ea-44df-9515-fd857fc4ee1d" align="right">
+  <hr>
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/cd4cbadc-b33a-4621-b152-5b4cb29a8457">
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/df49ae65-7bbd-4c08-964a-208e13f92703" align="right">
+  <hr>
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/469ce17f-8a06-4a22-a84f-85f4e1839beb">
+    <img width="47%" src="https://github.com/pnzrdlr17/bookharbor/assets/81994166/04b150fe-e33f-4da3-9845-ce866add92bf" align="right">
+  <br>
+</p>
+ 
+`Don't forget to leave a ⭐`
